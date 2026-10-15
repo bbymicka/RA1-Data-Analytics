@@ -1,0 +1,115 @@
+{
+  "date": "2026-10-14",
+  "python": "3.12.14",
+  "pandas": "3.0.1",
+  "runs": [
+    {
+      "scenario": "root_clean",
+      "fresh_kernel": true,
+      "code_cells_executed": 9,
+      "errors": 0
+    },
+    {
+      "scenario": "notebooks_clean",
+      "fresh_kernel": true,
+      "code_cells_executed": 9,
+      "errors": 0
+    },
+    {
+      "scenario": "repeat",
+      "fresh_kernel": true,
+      "code_cells_executed": 9,
+      "errors": 0
+    }
+  ],
+  "datasets": {
+    "casos": {
+      "rows": 18110,
+      "columns": 12,
+      "source_sha256": "bb67458c4405f6d27c2304798a3b5c5213630f0a9f9f32a9d819cd85d9a326f1",
+      "output_sha256": "31b6731cef5a51489d98e50a3357cef0e3caafaaa46b575ade176837bd2e1307",
+      "all_cells_equal_to_previous": true,
+      "byte_identical_to_previous": true,
+      "duplicate_keys": 0,
+      "removed_duplicates": 0
+    },
+    "testes": {
+      "rows": 16335,
+      "columns": 8,
+      "source_sha256": "8f7b4f3b995a43381569d892b0c911d4dd9de86a80b92bb71fb76e959316e090",
+      "output_sha256": "49e90478a79e64f5c4204d523399945d06bf6739e1c8244d3c0a52a5ed50201e",
+      "all_cells_equal_to_previous": true,
+      "byte_identical_to_previous": true,
+      "duplicate_keys": 0,
+      "removed_duplicates": 1
+    },
+    "vacinacao": {
+      "rows": 7845,
+      "columns": 27,
+      "source_sha256": "c4b579204483cd4c75b79793ff4b16b9be1ee329c081cdbd40d9e4237737276d",
+      "output_sha256": "e22db7b8506eb960c23e1885e782c95125a63ef607a0836d270c068690cb7e81",
+      "all_cells_equal_to_previous": true,
+      "byte_identical_to_previous": true,
+      "duplicate_keys": 0,
+      "removed_duplicates": 0
+    }
+  },
+  "colab_live_tested": false,
+  "notebook_sha256": "668d150d63aeaf0657759d4051d24f4a700bc55c6cc7d204008c6755239515c6",
+  "quality_matches_previous": {
+    "missing_per_column": true,
+    "cumulative_decreases": {
+      "casos": 52,
+      "testes": 23,
+      "vacinacao": 124
+    },
+    "cross_field_inconsistencies": 7
+  },
+  "guard_checks": [
+    {
+      "scenario": "invalid_date",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "missing_state",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "conflicting_key",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "fraction",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "negative",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "overflow",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "invalid_time",
+      "blocked_before_export": true
+    },
+    {
+      "scenario": "exact_large_integer",
+      "precision_preserved": true
+    }
+  ],
+  "vscode_ui_tested": false,
+  "removed_after_validation": [
+    "src/",
+    "scripts/",
+    "tests/",
+    "reports/quality.md",
+    "reports/quality.json",
+    "reports/occurrences.csv",
+    "reports/manifest.json",
+    "reports/notebook_validation.json",
+    "reports/*_duplicates.csv",
+    "reports/*_quarantine.csv"
+  ]
+}

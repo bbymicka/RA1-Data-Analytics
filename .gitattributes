@@ -1,0 +1,4 @@
+# Preserve the exact bytes used by the validation hashes.
+*.csv -text
+*.ipynb -text
+*.docx -text

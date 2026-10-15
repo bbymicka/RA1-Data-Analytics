@@ -1,0 +1,9 @@
+.runtime/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.jupyter/
+
+.docx_qa/
+~$*.docx
