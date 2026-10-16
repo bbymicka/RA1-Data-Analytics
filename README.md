@@ -58,7 +58,3 @@ Todas as variáveis foram preservadas. Acrescentamos a linha de origem (`source_
 | `vacinacao.csv` | 7.845 | 27 |
 
 Os CSVs usam UTF-8, vírgulas, datas `AAAA-MM-DD` e campos vazios para ausências. A execução salva as saídas sem sobrescrever os originais.
-
-Em 15/10/2026, o notebook passou por três execuções completas em ambientes Python novos, sem erros. As nove células de código têm saídas salvas. Os originais e os resultados preparados foram preservados. O registro está em [reports/validation.json](reports/validation.json). A interface do VS Code e uma sessão real do Colab não foram testadas.
-
-**Cuidados:** não somar acumulados entre datas nem India aos estados. Doses, pessoas e amostras são medidas diferentes. Confira o preenchimento dos campos antes das próximas análises.
