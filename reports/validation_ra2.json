@@ -1,0 +1,37 @@
+{
+  "environment": {
+    "system": "Linux",
+    "python": "3.12.15",
+    "pyspark": "3.5.7",
+    "java": "17",
+    "runner": "Docker"
+  },
+  "ra1_sources_unchanged": true,
+  "ra1_execution_passed": true,
+  "csv_sha256_unchanged": {
+    "covid_19_india.csv": "bb67458c4405f6d27c2304798a3b5c5213630f0a9f9f32a9d819cd85d9a326f1",
+    "covid_vaccine_statewise.csv": "c4b579204483cd4c75b79793ff4b16b9be1ee329c081cdbd40d9e4237737276d",
+    "StatewiseTestingDetails.csv": "8f7b4f3b995a43381569d892b0c911d4dd9de86a80b92bb71fb76e959316e090",
+    "data/processed/casos.csv": "31b6731cef5a51489d98e50a3357cef0e3caafaaa46b575ade176837bd2e1307",
+    "data/processed/testes.csv": "49e90478a79e64f5c4204d523399945d06bf6739e1c8244d3c0a52a5ed50201e",
+    "data/processed/vacinacao.csv": "e22db7b8506eb960c23e1885e782c95125a63ef607a0836d270c068690cb7e81"
+  },
+  "full_notebook_executed": true,
+  "spark_streaming_passed": true,
+  "second_streaming_execution_passed": true,
+  "same_kernel_repetition_identical": true,
+  "active_queries_after": 0,
+  "cumulative_records": [
+    3,
+    6,
+    9
+  ],
+  "total_samples": 64,
+  "native_windows_validated": false,
+  "colab_validated": false,
+  "pdf": {
+    "pages": 22,
+    "visual_review_passed": true,
+    "contains_actual_streaming_outputs": true
+  }
+}

@@ -1,3 +1,4 @@
 # Pandas realiza a preparação; ipykernel permite executar no VS Code.
 pandas==3.0.1
 ipykernel==7.3.0
+pyspark==3.5.7

@@ -1,0 +1,7 @@
+FROM python:3.12-bookworm
+RUN apt-get update && apt-get install -y --no-install-recommends openjdk-17-jre-headless && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir pandas==3.0.1 ipykernel==7.3.0 pyspark==3.5.7 nbclient==0.11.0
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV SPARK_LOCAL_IP=127.0.0.1
+ENV PYSPARK_PYTHON=/usr/local/bin/python
+WORKDIR /work

@@ -1,4 +1,4 @@
-# RA1 — COVID-19 na Índia
+# RA1 e RA2 — COVID-19 na Índia
 
 [Repositório](https://github.com/bbymicka/RA1-Data-Analytics) · [Notebook](notebooks/ra1.ipynb) · [Documento da avaliação](docs/RA1_COVID_India_Preenchido.docx)
 
@@ -58,3 +58,24 @@ Todas as variáveis foram preservadas. Acrescentamos a linha de origem (`source_
 | `vacinacao.csv` | 7.845 | 27 |
 
 Os CSVs usam UTF-8, vírgulas, datas `AAAA-MM-DD` e campos vazios para ausências. A execução salva as saídas sem sobrescrever os originais.
+
+## 7. RA2 — Streaming de registros simulados
+
+A seção RA2 está no mesmo `notebooks/ra1.ipynb`, após o RA1. São 9 registros artificiais de novas amostras de testes em Maharashtra e Karnataka, divididos em 3 arquivos JSON. Spark Structured Streaming soma as amostras por estado em janelas Tumbling de 1 minuto. Esses registros não entram nos CSVs reais.
+
+Instale `requirements.txt` e configure Java 17 no ambiente do kernel (`JAVA_HOME`). No Colab, instale `%pip install pyspark==3.5.7` antes do RA2 e use Java 17. No Windows, componentes nativos do Hadoop podem ser necessários. A execução foi validada em Linux pelo Docker; Colab e WSL não foram testados.
+
+Execute as células em ordem. A função `demonstrar_streaming()` inicia a consulta, publica um arquivo por vez, aguarda `processAllAvailable()`, mostra e confere cada tabela e encerra a consulta. Para repetir, execute novamente `resultados_ra2 = demonstrar_streaming()`: entrada, nome da consulta e checkpoint são novos.
+
+**Validação concluída pelo Docker:** notebook completo executado, código do RA1 e seis CSVs preservados. O Spark processou 3, 6 e 9 registros acumulados, confirmou os totais de cada janela e chegou a 64 novas amostras simuladas. A repetição no mesmo kernel produziu as mesmas três tabelas, sem consultas ativas ao final. Veja `reports/validation_ra2.json`. A execução nativa no Windows continua dependente da biblioteca do Hadoop que faltava no ambiente.
+
+Para repetir os testes com o Docker Desktop aberto, execute na raiz do projeto, no PowerShell:
+
+```powershell
+docker build -t covid-ra2-validation:local -f scripts/Dockerfile.ra2 scripts
+docker run --rm --mount "type=bind,source=${PWD},target=/work" covid-ra2-validation:local python scripts/validate_ra2.py
+```
+
+O script executa RA1 e RA2, repete a simulação e salva o notebook com as saídas e o relatório após as verificações. A evidência completa da repetição fica em `tmp/docker_repeat_evidence.ipynb`. A imagem Docker é apenas um ambiente de teste; não acrescenta serviços à análise.
+
+O [PDF do notebook](output/pdf/RA1_RA2_COVID_India.pdf) inclui RA1, RA2 e as três tabelas reais do streaming. Para exportar novamente após mudanças, use Jupyter/VS Code para exportar em HTML e a opção de impressão em PDF do navegador; confira as tabelas largas do RA1.
