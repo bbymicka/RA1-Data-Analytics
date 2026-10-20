@@ -13,8 +13,21 @@ root = Path.cwd()
 p = root / 'notebooks/ra1.ipynb'
 original = nbformat.read(p, as_version=4)
 n = copy.deepcopy(original)
-assert n.cells[-1].id == 'ra2-validation-status'
-n.cells.pop()
+# A nota de validação pode ter sido removida ou ter recebido outro ID no editor.
+# Retiramos apenas notas geradas pelo validador, sem exigir uma última célula fixa.
+n.cells = [
+    cell for cell in n.cells
+    if not (
+        cell.cell_type == 'markdown'
+        and (
+            cell.get('id') == 'ra2-validation-status'
+            or (
+                cell.source.lstrip().startswith('### Validação da execução')
+                and 'O notebook completo foi executado em Linux pelo Docker' in cell.source
+            )
+        )
+    )
+]
 files = list(root.glob('*.csv')) + list((root/'data/processed').glob('*.csv'))
 hashes = {str(f.relative_to(root)): hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
 count = len(n.cells)
@@ -37,7 +50,9 @@ assert all(a.source == b.source for a,b in zip(original.cells[:19], n.cells[:19]
 assert not any(o.output_type == 'error' for c in n.cells for o in c.get('outputs', []))
 nbformat.write(n, root/'tmp/docker_repeat_evidence.ipynb')
 n.cells = n.cells[:count]
-n.cells[-1].source = n.cells[-1].source.replace('**Valores esperados (ainda não confirmados pelo Spark neste ambiente):**', '**Resultados confirmados na execução:**')
+for cell in n.cells:
+    if cell.cell_type == 'markdown':
+        cell.source = cell.source.replace('**Valores esperados (ainda não confirmados pelo Spark neste ambiente):**', '**Resultados confirmados na execução:**')
 n.cells.append(nbformat.v4.new_markdown_cell('''### Validação da execução
 
 O notebook completo foi executado em Linux pelo Docker, com Python 3.12, Java 17 e PySpark 3.5.7. O código do RA1 e os conteúdos dos três CSVs originais e dos três CSVs preparados permaneceram iguais.
