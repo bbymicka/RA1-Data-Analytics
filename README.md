@@ -1,4 +1,4 @@
-# RA1 e RA2 — COVID-19 na Índia
+# RA1, RA2 e RA3 — COVID-19 na Índia
 
 [Repositório](https://github.com/bbymicka/RA1-Data-Analytics) · [Notebook](notebooks/ra1.ipynb) · [Documento da avaliação](docs/RA1_COVID_India_Preenchido.docx)
 
@@ -79,3 +79,16 @@ docker run --rm --mount "type=bind,source=${PWD},target=/work" covid-ra2-validat
 O script executa RA1 e RA2, repete a simulação e salva o notebook com as saídas e o relatório após as verificações. A evidência completa da repetição fica em `tmp/docker_repeat_evidence.ipynb`. A imagem Docker é apenas um ambiente de teste; não acrescenta serviços à análise.
 
 O [PDF do notebook](output/pdf/RA1_RA2_COVID_India.pdf) inclui RA1, RA2 e as três tabelas reais do streaming. Para exportar novamente após mudanças, use Jupyter/VS Code para exportar em HTML e a opção de impressão em PDF do navegador; confira as tabelas largas do RA1.
+
+## 8. RA3 — Análise dos dados e previsão
+
+O [relatório do RA3](docs/ra3.md) reúne estatísticas descritivas, cinco visualizações interpretadas, a discussão sobre representatividade e a avaliação da regressão. O [script](scripts/ra3.py) usa os três CSVs preparados que já estão no repositório.
+
+Na raiz do projeto, com Python 3.12 ou 3.13 disponível no terminal, execute:
+
+```powershell
+python -m pip install -r requirements-ra3.txt
+python scripts/ra3.py
+```
+
+As tabelas e as métricas aparecem no terminal. Os gráficos e as previsões por data são gravados em `output/ra3`. A execução do RA3 é independente do notebook e do Spark.
