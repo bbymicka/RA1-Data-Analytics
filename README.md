@@ -10,7 +10,7 @@ Vamos preparar dados de casos, testes e vacinação nos estados e territórios d
 - Como o volume registrado de testes variou entre estados e ao longo do tempo?
 - Como a administração da primeira e da segunda dose evoluiu nos estados durante 2021?
 
-A RA1 termina com os dados preparados. Ainda não calculamos indicadores nem tiramos conclusões sobre a pandemia.
+A RA1 termina com os dados preparados. A análise estatística, as interpretações e a previsão estão no RA3, descrito na seção 8.
 
 ## 2. Fontes de dados
 
@@ -84,11 +84,36 @@ O [PDF do notebook](output/pdf/RA1_RA2_COVID_India.pdf) inclui RA1, RA2 e as tr�
 
 O [relatório do RA3](docs/ra3.md) reúne estatísticas descritivas, cinco visualizações interpretadas, a discussão sobre representatividade e a avaliação da regressão. O [script](scripts/ra3.py) usa os três CSVs preparados que já estão no repositório.
 
-Na raiz do projeto, com Python 3.12 ou 3.13 disponível no terminal, execute:
+Para avaliar a entrega, consulte o código em `scripts/ra3.py`, a documentação em `docs/ra3.md` e as saídas em `output/ra3/`. O relatório explica as técnicas, os resultados, cada gráfico, a escolha do modelo e as limitações.
+
+Use Python 3.12 ou 3.13. Na raiz do projeto, crie um ambiente e execute os comandos abaixo no PowerShell. Se já tiver a pasta `.venv`, comece pela instalação das dependências.
 
 ```powershell
-python -m pip install -r requirements-ra3.txt
-python scripts/ra3.py
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-ra3.txt
+.\.venv\Scripts\python.exe -X utf8 scripts/ra3.py
 ```
 
-As tabelas e as métricas aparecem no terminal. Os gráficos e as previsões por data são gravados em `output/ra3`. A execução do RA3 é independente do notebook e do Spark.
+Os arquivos de entrada são `data/processed/casos.csv`, `data/processed/testes.csv` e `data/processed/vacinacao.csv`, já incluídos no repositório. O script encontra esses caminhos a partir da própria localização. Pandas trata as séries, NumPy ajusta a regressão e Matplotlib gera as imagens.
+
+As tabelas e as métricas aparecem no terminal. As saídas ficam em `output/ra3/` e são substituídas ao executar novamente.
+
+| Arquivo | Conteúdo |
+|---|---|
+| `01_casos.png` | Evolução de confirmados, recuperados e óbitos nos três estados |
+| `02_distribuicao.png` | Histograma da variação diária dos confirmados |
+| `03_testes.png` | Evolução dos testes e comparação de volumes na mesma data |
+| `04_vacinacao.png` | Primeiras e segundas doses acumuladas |
+| `05_previsao.png` | Valores observados e previstos para Maharashtra |
+| `previsoes.csv` | Data-alvo, valor observado, duas características e previsões de regressão e persistência |
+
+Para conferir a execução, verifique 498 variações diárias por estado, 419 datas de treino e 72 datas de teste. O teste deve ir de 01/06/2021 a 11/08/2021. As métricas esperadas, arredondadas a duas casas, são:
+
+| Modelo | MAE (casos/dia) | RMSE (casos/dia) |
+|---|---:|---:|
+| Regressão linear | 1.052,14 | 1.429,60 |
+| Persistência | 1.070,76 | 1.421,08 |
+
+No CSV, `persistencia` deve coincidir com `variacao_ontem` em todas as linhas. As métricas podem ser conferidas calculando a média dos erros absolutos e a raiz da média dos erros quadráticos entre cada previsão e `observado`.
+
+O script gera os gráficos em arquivo. Abra os PNGs após a execução para visualizá-los. Se aparecer `ModuleNotFoundError`, reinstale `requirements-ra3.txt` com o mesmo executável Python usado para executar o script. A execução do RA3 é independente do notebook e do Spark.

@@ -56,6 +56,8 @@ Os registros permitem descrever os valores publicados no período e nos territó
 
 A regressão estima a variação do acumulado de confirmados em Maharashtra para o próximo boletim diário. Para a data-alvo `t`, as duas características são a variação observada em `t − 1` e a média das sete variações de `t − 7` a `t − 1`. A variável-alvo é a variação observada em `t`, na unidade de casos registrados por dia. O modelo é uma regressão linear com intercepto ajustada por mínimos quadrados com NumPy.
 
+A regressão linear foi escolhida por produzir uma estimativa numérica com poucos parâmetros e permitir explicar a relação entre o histórico recente e a previsão. A variação da véspera representa o nível mais recente, e a média de sete dias suaviza oscilações diárias. Os mínimos quadrados escolhem o intercepto e os dois pesos que minimizam a soma dos erros quadráticos no treino. A previsão segue a expressão `intercepto + peso_1 × variacao_ontem + peso_2 × media_7_dias_anteriores`.
+
 O treino abrangeu 419 datas-alvo, de 08/04/2020 a 31/05/2021. O teste teve 72 datas de 01/06/2021 a 11/08/2021. O corte cronológico reserva os boletins mais recentes para avaliação. O modelo fica fixo após o treino, e cada previsão de teste usa somente observações anteriores à data-alvo. O cenário de uso é uma previsão diária atualizada conforme chegam os boletins. A referência de persistência prevê a mesma variação observada na véspera.
 
 | Modelo | MAE (casos/dia) | RMSE (casos/dia) |
@@ -64,6 +66,8 @@ O treino abrangeu 419 datas-alvo, de 08/04/2020 a 31/05/2021. O teste teve 72 da
 | Persistência | 1.070,76 | 1.421,08 |
 
 O MAE mede o erro absoluto médio. A regressão reduziu esse erro em cerca de 19 casos por dia (1,7%). O RMSE dá mais peso aos desvios grandes e foi 8,52 casos por dia maior para a regressão. O ganho sobre a persistência depende da métrica e é pequeno neste intervalo de queda. A avaliação cobre um único estado e período de teste, com variáveis derivadas dos próprios boletins.
+
+As métricas usam as mesmas 72 datas para os dois modelos. O MAE é a média de `abs(previsto − observado)`, e o RMSE é a raiz quadrada da média de `(previsto − observado)²`. Ambos têm unidade de casos registrados por dia, e valores menores indicam menor erro. As sete primeiras datas do recorte ficam fora do ajuste porque ainda não possuem sete diferenças anteriores dentro do período analisado.
 
 ## 5. Conclusão
 
